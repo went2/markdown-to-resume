@@ -1,22 +1,16 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
+import { uploadFile } from "./redux/reducer";
 
 function HeaderLeft(props) {
-  const { setEditorContent } = props;
+  const { uploadFile } = props;
 
   const handleInputFile = useCallback(
     (evt) => {
       let file = evt.target.files[0];
-      let reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = function () {
-        const content = reader.result;
-        // console.log(content);
-
-        setEditorContent(content);
-      };
+      uploadFile(file);
     },
-    [setEditorContent]
+    [uploadFile]
   );
 
   return (
@@ -37,15 +31,8 @@ const mapStateToProps = function (state) {
   return {};
 };
 
-const mapDispatchToProps = function (dispatch) {
-  return {
-    setEditorContent: (content) => {
-      dispatch({
-        type: "SET_EDITOR_CONTENT",
-        content,
-      });
-    },
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  uploadFile: (file) => dispatch(uploadFile(file)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderLeft);
