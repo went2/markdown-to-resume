@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
-import { updateContent } from "../editor/redux/reducer.js";
+import { updateContent, md2Html } from "../editor/redux/reducer.js";
 
 function HeaderLeft(props) {
-  const { updateContent } = props;
+  const { updateContent, convertMd2Html } = props;
 
   const handleInputFile = useCallback(
     (evt) => {
@@ -13,9 +13,10 @@ function HeaderLeft(props) {
       reader.onload = function () {
         const content = reader.result;
         updateContent(content);
+        convertMd2Html(content);
       };
     },
-    [updateContent]
+    [updateContent, convertMd2Html]
   );
 
   return (
@@ -38,6 +39,7 @@ const mapStateToProps = function (state) {
 
 const mapDispatchToProps = (dispatch) => ({
   updateContent: (file) => dispatch(updateContent(file)),
+  convertMd2Html: (content) => dispatch(md2Html(content)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderLeft);
