@@ -7,13 +7,12 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 
 const initialState = {
-  content: "nothing here~",
-  html: "nothing here either",
+  content: "fill me with markdown file to process",
+  html: "",
 };
 
 export const md2Html = createAsyncThunk("editor/md2html", (content) => {
   return new Promise((resolve, reject) => {
-    // compile markdown string to html
     unified()
       .use(remarkParse)
       .use(remarkRehype)
@@ -36,34 +35,13 @@ const editorSlice = createSlice({
   reducers: {
     updateContent(state, action) {
       state.content = action.payload;
-
-      // compile markdown string to html
-      // unified()
-      //   .use(remarkParse)
-      //   .use(remarkRehype)
-      //   .use(rehypeDocument)
-      //   .use(rehypeFormat)
-      //   .use(rehypeStringify)
-      //   .process(state.content)
-      //   .then((res) => {
-      //     state.html = res.value;
-      //     console.log(state.html);
-      //   });
     },
   },
-  extraReducers:
-    // {
-    //   [md2Html.fulfilled]: (state, action) => {
-    //     console.log("fullfill", action.payload);
-    //     state.html = action.payload;
-    //   },
-    // },
-
-    (builder) => {
-      builder.addCase(md2Html.fulfilled, (state, action) => {
-        state.html = action.payload;
-      });
-    },
+  extraReducers: (builder) => {
+    builder.addCase(md2Html.fulfilled, (state, action) => {
+      state.html = action.payload;
+    });
+  },
 });
 
 export const { updateContent } = editorSlice.actions;

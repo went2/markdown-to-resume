@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import "./Previewer.less";
+import "./Preview.less";
 
 const Previewer = ({ html }) => {
   return (
