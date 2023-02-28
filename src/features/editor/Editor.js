@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { updateDoc } from "./redux/reducer.js";
 import useCodeMirror from "./hooks/useCodeMirror.js";
@@ -10,7 +10,6 @@ function Editor(props) {
   const { doc, updateDoc } = props;
 
   const handleDocChangeRaw = (editorState) => {
-    // console.log("code change", editorState);
     const newDoc = editorState.doc.toString();
     updateDoc(newDoc);
   };

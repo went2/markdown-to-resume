@@ -1,12 +1,21 @@
-.mr-header-bar {
+.mr-header {
   display: flex;
-  height: 58px;
-  background-color: #fff;
+  height: var(--header-bar-height);
+  background-color: var(--header-background-color);
   box-shadow: 0 1px 1px rgb(0 0 0 / 20%);
-  position: relative;
-  padding: 0 32px;
+  padding: 0 2.5rem;
   justify-content: space-between;
   align-items: center;
+
+  .title {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    cursor: default;
+    // margin-left: -50px;
+    &:hover span {
+      color: cornflowerblue;
+    }
+  }
   &__left {
     display: flex;
   }

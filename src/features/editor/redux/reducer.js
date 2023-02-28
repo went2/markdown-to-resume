@@ -8,8 +8,7 @@ import rehypeStringify from "rehype-stringify";
 
 const initialState = {
   content: "fill me with markdown file to process",
-  html: "",
-  doc: "# select a markdown file and get start~", // marddown string
+  doc: "", // marddown string
 };
 
 export const md2Html = createAsyncThunk("editor/md2html", (content) => {
