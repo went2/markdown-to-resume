@@ -12,7 +12,7 @@ module.exports = {
 
   webpack: {
     alias: {
-      "@": pathResolve(__dirname, "src"),
+      "@": pathResolve("src"),
     },
   },
 };

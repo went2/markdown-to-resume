@@ -4,6 +4,7 @@ import Editor from "./features/editor/Editor.js";
 import Preview from "./features/preview/Preview.js";
 
 import SplitPane from "react-split-pane";
+import UploadArea from "./features/editor/UploadArea.js";
 
 import "./App.less";
 import { connect } from "react-redux";
@@ -13,7 +14,7 @@ const App = memo(({ doc }) => {
     <main>
       <Header></Header>
       <SplitPane split="vertical">
-        {doc ? <Editor /> : <div>drag a file to start</div>}
+        {doc ? <Editor /> : <UploadArea />}
         <Preview />
       </SplitPane>
     </main>

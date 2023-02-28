@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { updateDoc } from "./redux/reducer.js";
 import useCodeMirror from "./hooks/useCodeMirror.js";
 import { throttle } from "lodash";
+import "github-markdown-css";
 
 import "./Editor.less";
 
@@ -28,7 +29,7 @@ function Editor(props) {
     }
   }, [editorView]);
 
-  return <div className="rs-editor" ref={refContainer}></div>;
+  return <div className="rs-editor markdown-body" ref={refContainer}></div>;
 }
 
 const mapStateToProps = function (state) {
