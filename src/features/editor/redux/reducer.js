@@ -9,6 +9,7 @@ import rehypeStringify from "rehype-stringify";
 const initialState = {
   content: "fill me with markdown file to process",
   html: "",
+  doc: "# select a markdown file and get start~", // marddown string
 };
 
 export const md2Html = createAsyncThunk("editor/md2html", (content) => {
@@ -36,6 +37,9 @@ const editorSlice = createSlice({
     updateContent(state, action) {
       state.content = action.payload;
     },
+    updateDoc(state, action) {
+      state.doc = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(md2Html.fulfilled, (state, action) => {
@@ -44,6 +48,6 @@ const editorSlice = createSlice({
   },
 });
 
-export const { updateContent } = editorSlice.actions;
+export const { updateContent, updateDoc } = editorSlice.actions;
 export { editorSlice };
 export default editorSlice.reducer;

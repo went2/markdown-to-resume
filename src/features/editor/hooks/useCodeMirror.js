@@ -1,10 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
+import {
+  drawSelection,
+  EditorView,
+  highlightSpecialChars,
+  keymap,
+} from "@codemirror/view";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { basicSetup } from "codemirror";
-import { defaultKeymap } from "@codemirror/commands";
+import { defaultKeymap, history } from "@codemirror/commands";
 import { languages } from "@codemirror/language-data";
+
+const extensions = [
+  highlightSpecialChars(),
+  history(),
+  drawSelection(),
+  keymap.of(defaultKeymap),
+];
 
 const useCodeMirror = ({ onChange, initialDoc }) => {
   const refContainer = useRef(null);
@@ -12,11 +23,11 @@ const useCodeMirror = ({ onChange, initialDoc }) => {
 
   useEffect(() => {
     if (!refContainer.current) return;
+
     const startState = EditorState.create({
       doc: initialDoc,
       extensions: [
-        basicSetup,
-        keymap.of(defaultKeymap),
+        ...extensions,
         markdown({
           base: markdownLanguage,
           codeLanguages: languages,
@@ -37,10 +48,11 @@ const useCodeMirror = ({ onChange, initialDoc }) => {
     });
 
     setEditorView(view);
+
     return () => {
       view.destroy();
     };
-  }, [refContainer]);
+  }, []);
 
   return [refContainer, editorView];
 };

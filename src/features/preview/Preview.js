@@ -2,19 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 
 import "./Preview.less";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
-const Previewer = ({ html }) => {
+const Preview = (props) => {
+  const { doc } = props;
   return (
     <div className="rs-view">
-      <iframe title="rsViewer" srcDoc={html} width="100%" height="100%" />
+      <ReactMarkdown children={doc} remarkPlugins={[remarkGfm]} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    html: state.editor.html,
+    doc: state.editor.doc,
   };
 };
 
-export default connect(mapStateToProps)(Previewer);
+export default connect(mapStateToProps)(Preview);

@@ -1,20 +1,21 @@
-import React, { memo, useState } from "react";
-import Layout from "./base-ui/Layout/index.js";
+import React, { memo, useCallback, useState } from "react";
 import Header from "./features/header/Header.js";
 import Editor from "./features/editor/Editor.js";
-import Previewer from "./features/preview/Preview.js";
+import Preview from "./features/preview/Preview.js";
+
+import SplitPane from "react-split-pane";
 
 import "./App.less";
 
 const App = memo(() => {
   return (
-    <Layout>
+    <main>
       <Header></Header>
-      <div className="mr-container">
+      <SplitPane split="vertical">
         <Editor />
-        <Previewer />
-      </div>
-    </Layout>
+        <Preview />
+      </SplitPane>
+    </main>
   );
 });
 

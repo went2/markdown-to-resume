@@ -1,47 +1,45 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { updateContent, md2Html } from "./redux/reducer.js";
+import { updateDoc } from "./redux/reducer.js";
 import useCodeMirror from "./hooks/useCodeMirror.js";
+import { throttle } from "lodash";
 
 import "./Editor.less";
 
 function Editor(props) {
-  const { content, updateContent, convertMd2Html } = props;
-  const [doc, setDoc] = useState("# hello world! \n");
-  const handleDocChange = useCallback((newDoc) => {
-    setDoc(newDoc);
-  }, []);
+  const { doc, updateDoc } = props;
+
+  const handleDocChangeRaw = (editorState) => {
+    // console.log("code change", editorState);
+    const newDoc = editorState.doc.toString();
+    updateDoc(newDoc);
+  };
+  const throttledHandler = throttle(handleDocChangeRaw, 200);
+  const handleDocChange = useCallback(throttledHandler, [throttledHandler]);
 
   const [refContainer, editorView] = useCodeMirror({
     initialDoc: doc,
     onChange: handleDocChange,
   });
 
-  const handleInputChange = useCallback(
-    (evt) => {
-      updateContent(evt.target.value);
-      convertMd2Html(evt.target.value);
-    },
-    [updateContent, convertMd2Html]
-  );
+  useEffect(() => {
+    if (editorView) {
+    } else {
+      // loading editor
+    }
+  }, [editorView]);
 
-  return (
-    <div className="rs-editor">
-      <textarea value={content} onChange={handleInputChange}></textarea>
-      <div ref={refContainer}></div>
-    </div>
-  );
+  return <div className="rs-editor" ref={refContainer}></div>;
 }
 
 const mapStateToProps = function (state) {
   return {
-    content: state.editor.content,
+    doc: state.editor.doc,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateContent: (content) => dispatch(updateContent(content)),
-  convertMd2Html: (content) => dispatch(md2Html(content)),
+  updateDoc: (newDoc) => dispatch(updateDoc(newDoc)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);
