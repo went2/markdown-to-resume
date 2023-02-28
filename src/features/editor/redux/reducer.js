@@ -29,24 +29,36 @@ export const md2Html = createAsyncThunk("editor/md2html", (content) => {
   });
 });
 
+export const readFile = createAsyncThunk("editor/readFile", (file) => {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function () {
+      const content = reader.result;
+      resolve(content);
+    };
+  });
+});
+
 const editorSlice = createSlice({
   name: "editor",
   initialState,
   reducers: {
-    updateContent(state, action) {
-      state.content = action.payload;
-    },
     updateDoc(state, action) {
       state.doc = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(md2Html.fulfilled, (state, action) => {
-      state.html = action.payload;
-    });
+    builder
+      .addCase(md2Html.fulfilled, (state, action) => {
+        state.html = action.payload;
+      })
+      .addCase(readFile.fulfilled, (state, action) => {
+        state.doc = action.payload;
+      });
   },
 });
 
-export const { updateContent, updateDoc } = editorSlice.actions;
+export const { updateDoc } = editorSlice.actions;
 export { editorSlice };
 export default editorSlice.reducer;
