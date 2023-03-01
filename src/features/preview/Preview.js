@@ -10,11 +10,13 @@ const Preview = (props) => {
 
   return (
     <div className="rs-view__wrapper">
-      <ReactMarkdown
-        children={doc}
-        remarkPlugins={[remarkGfm]}
-        className="rs-view__inner"
-      />
+      <div className="rs-view__inner">
+        <ReactMarkdown
+          children={doc}
+          remarkPlugins={[remarkGfm]}
+          className="rs-view-page"
+        />
+      </div>
     </div>
   );
 };

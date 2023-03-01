@@ -2,8 +2,13 @@
   padding: 2rem 0px;
   background-color: var(--preview-background-color);
   word-wrap: break-word;
+  width: 100%;
   height: calc(100vh - var(--header-bar-height));
-  overflow: auto;
+  // height: 100%;s
+  overflow-x: hidden;
+
+  overflow-y: scroll;
+  position: relative;
 }
 
 // scrollbar
@@ -19,9 +24,19 @@
 }
 
 .rs-view__inner {
-  transform: scale(0.89);
-  margin: 0 auto;
-  padding: 2rem;
-  width: 666px;
-  background-color: #fff;
+  position: relative;
+  width: 794px;
+  transform-origin: left top;
+  margin: 20px auto;
+  margin-left: 65px;
+
+  .rs-view-page {
+    width: 100%;
+    padding: 2rem;
+    background-color: #fff;
+    transform: scale(0.66);
+    top: 0;
+    z-index: 10;
+    transform-origin: left top;
+  }
 }
