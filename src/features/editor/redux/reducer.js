@@ -7,8 +7,8 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 
 const initialState = {
-  content: "fill me with markdown file to process",
-  doc: "", // marddown string
+  doc: "", // markdown string
+  filename: "",
 };
 
 export const md2Html = createAsyncThunk("editor/md2html", (content) => {
@@ -31,11 +31,14 @@ export const md2Html = createAsyncThunk("editor/md2html", (content) => {
 
 export const readFile = createAsyncThunk("editor/readFile", (file) => {
   return new Promise((resolve, reject) => {
+    const filename = file.name.replace(".md", "");
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function () {
-      const content = reader.result;
-      resolve(content);
+      resolve({
+        doc: reader.result,
+        filename,
+      });
     };
   });
 });
@@ -54,7 +57,8 @@ const editorSlice = createSlice({
         state.html = action.payload;
       })
       .addCase(readFile.fulfilled, (state, action) => {
-        state.doc = action.payload;
+        state.doc = action.payload.doc;
+        state.filename = action.payload.filename;
       });
   },
 });

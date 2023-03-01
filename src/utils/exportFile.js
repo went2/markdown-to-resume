@@ -9,7 +9,7 @@ const options = {
     // documentClone.querySelector(".rs-view-page").style.transform = "scale(2)";
   },
 };
-export default function exportPdf(selector) {
+export function exportPdf(selector, filename) {
   const ele = document.querySelector(selector);
   if (!ele) return;
 
@@ -54,6 +54,24 @@ export default function exportPdf(selector) {
       page = null;
     }
 
-    pdf.save("test.pdf");
+    pdf.save(filename);
   });
+}
+
+export function exportMd(stringData, filename) {
+  const blob = new Blob([stringData], {
+    type: "text/markdown",
+  });
+
+  // 生成 url 链接
+  const objURL = URL.createObjectURL(blob);
+
+  // 设为 a 元素的下载地址
+  const aEle = document.createElement("a");
+  aEle.href = objURL;
+  aEle.download = filename + ".md";
+  aEle.click();
+
+  // 释放当前的 URL 对象
+  URL.revokeObjectURL(objURL);
 }
