@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import "./Preview.less";
@@ -7,9 +7,14 @@ import ReactMarkdown from "react-markdown";
 
 const Preview = (props) => {
   const { doc } = props;
+
   return (
-    <div className="rs-view">
-      <ReactMarkdown children={doc} remarkPlugins={[remarkGfm]} />
+    <div className="rs-view__wrapper">
+      <ReactMarkdown
+        children={doc}
+        remarkPlugins={[remarkGfm]}
+        className="rs-view__inner"
+      />
     </div>
   );
 };

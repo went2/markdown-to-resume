@@ -3,6 +3,7 @@ import React from "react";
 import "./Header.less";
 
 import HeaderLeft from "./HeaderLeft";
+import HeaderRight from "./HeaderRight";
 
 function Header() {
   return (
@@ -11,9 +12,7 @@ function Header() {
       <h1 className="title">
         <span>M</span>arkdown to <span>R</span>esume
       </h1>
-      <div>
-        header right <button>导出</button>
-      </div>
+      <HeaderRight />
     </div>
   );
 }

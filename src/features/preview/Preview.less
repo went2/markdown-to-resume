@@ -1,6 +1,27 @@
-.rs-view {
-  padding: 2rem;
-  background-color: #eee;
+.rs-view__wrapper {
+  padding: 2rem 0px;
+  background-color: var(--preview-background-color);
   word-wrap: break-word;
   height: calc(100vh - var(--header-bar-height));
+  overflow: auto;
+}
+
+// scrollbar
+.rs-view__wrapper::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+.rs-view__wrapper::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  background-color: #343434;
+}
+.rs-view__wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(144, 144, 144);
+}
+
+.rs-view__inner {
+  transform: scale(0.89);
+  margin: 0 auto;
+  padding: 2rem;
+  width: 666px;
+  background-color: #fff;
 }
