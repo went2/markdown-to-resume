@@ -1,3 +1,9 @@
 # Markdown-to-Resume
-Markdown-to-Resume: convert your markdown file to nicely formatted resume. 
 
+[m2r](m2r.netlify.app): convert your markdown file to nicely formatted resume. 
+
+## Usage
+
+1. Import the resume file in markdown format.
+2. Edit resume content online and preview the effect in real time.
+3. Export edited pdf and md files.
