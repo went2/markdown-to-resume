@@ -8,17 +8,27 @@
   align-items: center;
 
   .title {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    cursor: default;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    .title-text {
+      font-size: 1.8rem;
+      color: var(--text-color);
+      cursor: default;
+      span {
+        color: crimson;
+        transition: all 0.4s ease-in-out;
+      }
 
-    span {
-      color: crimson;
-      transition: all 0.4s ease-in-out;
+      &:hover span {
+        color: cornflowerblue;
+      }
     }
-
-    &:hover span {
-      color: cornflowerblue;
+    .desc {
+      margin-top: -5px;
+      font-size: 14px;
+      text-align: center;
+      color: rgb(0 0 0 / 30%);
     }
   }
 }
