@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import "./Preview.less";
