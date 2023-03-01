@@ -11,13 +11,19 @@ import { connect } from "react-redux";
 
 const App = memo(({ doc }) => {
   return (
-    <main>
+    <div className="app-container">
       <Header></Header>
-      <SplitPane split="vertical">
-        {doc ? <Editor /> : <UploadArea />}
-        <Preview />
-      </SplitPane>
-    </main>
+      <main>
+        <SplitPane split="vertical">
+          {doc ? <Editor /> : <UploadArea />}
+          {doc ? (
+            <Preview />
+          ) : (
+            <div className="preview-placeholder">预览区（当前无内容）</div>
+          )}
+        </SplitPane>
+      </main>
+    </div>
   );
 });
 
