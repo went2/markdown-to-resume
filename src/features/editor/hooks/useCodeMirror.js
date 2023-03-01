@@ -52,7 +52,7 @@ const useCodeMirror = ({ onChange, initialDoc }) => {
     return () => {
       view.destroy();
     };
-  }, []);
+  }, [initialDoc, onChange]);
 
   return [refContainer, editorView];
 };

@@ -9,11 +9,11 @@ const HeaderRight = (props) => {
   const exportPdfHandler = useCallback(() => {
     // 获取预览内容的节点
     exportPdf(".rs-view-page", filename);
-  }, []);
+  }, [filename]);
 
   const exportMdhandler = useCallback(() => {
     exportMd(doc, filename);
-  }, []);
+  }, [doc, filename]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { readFile } from "@/features/editor/redux/reducer.js";
 
@@ -9,7 +9,7 @@ function HeaderLeft(props) {
 
   const handleInputFile = useCallback(
     (evt) => readFile(evt.target.files[0]),
-    []
+    [readFile]
   );
 
   return (
