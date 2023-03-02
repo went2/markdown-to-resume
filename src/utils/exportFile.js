@@ -1,15 +1,13 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import "@/assets/font/shsc-normal.js";
 
 const options = {
   scale: 4,
   dpi: 300,
   backgroundColor: "#FFF",
-  onclone: function (documentClone) {
-    // documentClone.querySelector(".rs-view-page").style.transform = "scale(2)";
-  },
 };
-export function exportPdf(selector, filename) {
+export function exportPdfFromCanvas(selector, filename) {
   const ele = document.querySelector(selector);
   if (!ele) return;
 
@@ -21,9 +19,6 @@ export function exportPdf(selector, filename) {
       //按A4显示比例换算一页图像的像素高度
       imgHeight = Math.floor((a4h * canvas.width) / a4w);
     let renderedHeight = 0;
-
-    //设置context位置，值为相对于视窗的偏移量负值，让图片复位
-    // ctx.translate(-rect.left, -rect.top);
 
     while (renderedHeight < canvas.height) {
       let page = document.createElement("canvas");
@@ -42,7 +37,6 @@ export function exportPdf(selector, filename) {
           0,
           0
         );
-
       // 添加图像到页面
       pdf.addImage(
         page.toDataURL("image/jpeg", 1.0),
@@ -77,4 +71,26 @@ export function exportMd(stringData, filename) {
 
   // 释放当前的 URL 对象
   URL.revokeObjectURL(objURL);
+}
+
+export function exportPdfFromHtml(selector, filename) {
+  const ele = document.querySelector(selector);
+  if (!ele) return;
+
+  const pdf = new jsPDF();
+
+  pdf.setFont("shsc", "normal");
+  // set css fontFamily to make custom font work with .html()
+  // https://github.com/parallax/jsPDF/issues/2465
+  ele.style.fontFamily = "shsc";
+
+  pdf.html(ele, {
+    callback: function (doc) {
+      doc.setFont("shsc", "normal");
+      doc.save(filename);
+    },
+    margin: [10, 10, 10, 10],
+    width: 190,
+    windowWidth: 675,
+  });
 }

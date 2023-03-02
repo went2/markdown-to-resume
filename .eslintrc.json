@@ -1,7 +1,0 @@
-{
-  "parser": "babel-eslint",
-  "plugins": ["react-hooks"],
-  "rules": {
-    "react-hooks/exhaustive-deps": 0
-  }
-}

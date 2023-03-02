@@ -46,7 +46,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": 0
+    },
+    "env": {
+      "browser": true,
+      "node": true
+    }
   },
   "browserslist": {
     "production": [
@@ -61,6 +68,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0-alpha.9"
+    "@craco/craco": "^7.0.0-alpha.9",
+    "babel-eslint": "^10.1.0"
   }
 }
