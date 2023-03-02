@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect, useCallback, memo } from "react";
 import { connect } from "react-redux";
 import { updateDoc } from "./redux/reducer.js";
 import useCodeMirror from "./hooks/useCodeMirror.js";
@@ -7,15 +7,15 @@ import "github-markdown-css";
 
 import "./Editor.less";
 
-function Editor(props) {
+const Editor = memo((props) => {
   const { doc, updateDoc } = props;
 
-  const handleDocChangeRaw = (editorState) => {
-    const newDoc = editorState.doc.toString();
-    updateDoc(newDoc);
-  };
-  const throttledHandler = throttle(handleDocChangeRaw, 200);
-  const handleDocChange = useCallback(throttledHandler, [throttledHandler]);
+  const handleDocChange = useCallback(
+    throttle((editorState) => {
+      updateDoc(editorState.doc.toString());
+    }, 200),
+    []
+  );
 
   const [refContainer, editorView] = useCodeMirror({
     initialDoc: doc,
@@ -30,7 +30,7 @@ function Editor(props) {
   }, [editorView]);
 
   return <div className="rs-editor markdown-body" ref={refContainer}></div>;
-}
+});
 
 const mapStateToProps = function (state) {
   return {

@@ -22,6 +22,9 @@ export function exportPdf(selector, filename) {
       imgHeight = Math.floor((a4h * canvas.width) / a4w);
     let renderedHeight = 0;
 
+    //设置context位置，值为相对于视窗的偏移量负值，让图片复位
+    // ctx.translate(-rect.left, -rect.top);
+
     while (renderedHeight < canvas.height) {
       let page = document.createElement("canvas");
       page.width = canvas.width;
