@@ -11,13 +11,8 @@ export function exportPdfFromCanvas(selector, filename) {
   const ele = document.querySelector(selector);
   if (!ele) return;
 
-  let eleW = ele.offsetWidth;
-  let eleH = ele.scrollHeight;
-  let eleOffsetTop = ele.offsetTop; // 当前元素的外边框与最近定位元素的内边框的顶部的距离
-  let eleOffsetLeft = ele.offsetLeft;
-  console.log(eleW, eleH, eleOffsetTop, eleOffsetLeft);
+  splitPage(ele);
   return;
-
   html2canvas(ele, options).then((canvas) => {
     const pdf = new jsPDF("p", "mm", "a4");
     const ctx = canvas.getContext("2d"),
@@ -26,6 +21,8 @@ export function exportPdfFromCanvas(selector, filename) {
       //按A4显示比例换算一页图像的像素高度
       imgHeight = Math.floor((a4h * canvas.width) / a4w);
     let renderedHeight = 0;
+
+    console.log("canvas width", canvas.width);
 
     while (renderedHeight < canvas.height) {
       let page = document.createElement("canvas");
@@ -100,4 +97,47 @@ export function exportPdfFromHtml(selector, filename) {
     width: 190,
     windowWidth: 675,
   });
+}
+
+function splitPage(ele) {
+  // 因为存在缩放，宽高统一采用 boundingClienRect 的数值，不和 offsetHeight 混用
+  // boundingClienRect 不准确，还是应该采用 offsetHeight
+  const eleBounding = ele.getBoundingClientRect();
+  const eTop = eleBounding.top; // 容器元素距顶高度，用做基准，第一页的开始
+  const pageHeight = ele.offsetWidth * (297 / 210); // 按照 A4 比例的 1 页的像素
+
+  const eleList = ele.children;
+  const nodesNum = eleList.length;
+
+  let totalPage = Math.ceil(ele.offsetHeight / pageHeight);
+
+  // 找出当前页第一个跨页且最深层级的子元素
+  // 跨页的外层元素中有若干（嵌套的）子元素，有的跨页，有的不夸页，从中找到第一个跨页的子元素
+  // 依次类推，直到没有子元素
+
+  // 2页，需找 1 个跨页的最外层的元素即可
+  let pageNum = 1; // 从第1页开始
+  console.log("pageHeight", pageHeight);
+  for (let i = 0; i < nodesNum; i++) {
+    let node = eleList[i];
+    if (isCrossPage(node, pageHeight, pageNum)) {
+      console.log("找到跨页元素", node);
+      break;
+    }
+  }
+}
+
+/**
+ * 判断某个元素是否跨页
+ * @param {HTMLElement} el 元素
+ * @param {number} pageHeight 页高
+ * @param {number} currentPage 元素所在当前页数
+ */
+function isCrossPage(el, pageHeight, currentPage) {
+  const top = el.offsetTop,
+    height = el.offsetHeight,
+    totalPH = pageHeight * currentPage;
+  const isCross = top < totalPH && top + height > totalPH;
+
+  return isCross;
 }
