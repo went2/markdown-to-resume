@@ -12,7 +12,7 @@ const HeaderRight = (props) => {
   const { filename, doc } = props;
   const exportPdfHandler = useCallback(() => {
     // 获取预览内容的节点
-    exportPdfFromHtml(".rs-view-page", filename);
+    exportPdfFromCanvas(".rs-view-page", filename);
   }, [filename]);
 
   const exportMdhandler = useCallback(() => {

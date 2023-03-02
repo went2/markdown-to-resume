@@ -11,6 +11,13 @@ export function exportPdfFromCanvas(selector, filename) {
   const ele = document.querySelector(selector);
   if (!ele) return;
 
+  let eleW = ele.offsetWidth;
+  let eleH = ele.scrollHeight;
+  let eleOffsetTop = ele.offsetTop; // 当前元素的外边框与最近定位元素的内边框的顶部的距离
+  let eleOffsetLeft = ele.offsetLeft;
+  console.log(eleW, eleH, eleOffsetTop, eleOffsetLeft);
+  return;
+
   html2canvas(ele, options).then((canvas) => {
     const pdf = new jsPDF("p", "mm", "a4");
     const ctx = canvas.getContext("2d"),
