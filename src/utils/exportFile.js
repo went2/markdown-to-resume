@@ -26,20 +26,10 @@ export function exportPdfFromCanvas(selector, filename) {
       imgHeight = Math.floor((a4h * canvas.width) / a4w);
     let renderedHeight = 0;
 
-    console.log(
-      "canvasH",
-      canvas.height,
-      "canvasW",
-      canvas.width,
-      "imgHeight",
-      imgHeight
-    );
-
     while (renderedHeight < canvas.height) {
       let page = document.createElement("canvas");
       page.width = canvas.width;
       page.height = Math.min(imgHeight, canvas.height - renderedHeight); //内容可能不足一页
-      console.log("pageHeight", page.height);
 
       // getImageData裁剪一页区域，画到创建的canvas对象中
       page

@@ -9,14 +9,14 @@ import UploadArea from "./features/editor/UploadArea.js";
 import "./App.less";
 import { connect } from "react-redux";
 
-const App = memo(({ doc }) => {
+const App = memo(({ filename }) => {
   return (
     <div className="app-container">
       <Header></Header>
       <main>
         <SplitPane split="vertical">
-          {doc ? <Editor /> : <UploadArea />}
-          {doc ? (
+          {filename ? <Editor /> : <UploadArea />}
+          {filename ? (
             <Preview />
           ) : (
             <div className="preview-placeholder">预览区（当前无内容）</div>
@@ -29,7 +29,7 @@ const App = memo(({ doc }) => {
 
 const mapStateToProps = function (state) {
   return {
-    doc: state.editor.doc,
+    filename: state.editor.filename,
   };
 };
 

@@ -2,11 +2,7 @@ import React, { useCallback } from "react";
 import "./HeaderRight.less";
 import { connect } from "react-redux";
 
-import {
-  exportPdfFromCanvas,
-  exportMd,
-  exportPdfFromHtml,
-} from "@/utils/exportFile";
+import { exportPdfFromCanvas, exportMd } from "@/utils/exportFile";
 
 const HeaderRight = (props) => {
   const { filename, doc } = props;
