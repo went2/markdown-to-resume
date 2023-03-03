@@ -24,9 +24,7 @@
     4. 如何实现编辑器中内容改变，iframe 中的页面也跟着改变？使用响应式框架 + 状态管理。
     5. 第一天按照上面的思路用 React & Redux 搭了一个编辑器的雏形，左右两栏，左边编辑 md，右边显示 html。
 
-  <video id="first-day-work" controls="" preload="none" >
-      <source id="mp4" src="https://user-images.githubusercontent.com/20923112/222757636-5ede6d1a-78fa-4d06-be08-570889371ec2.mp4" type="video/mp4">
-  </video>
+![first-day-work](https://user-images.githubusercontent.com/20923112/222759116-b3f1bc9c-7535-40c4-b042-f9ceef74e852.gif)
   
   - 第二天：用 `CodeMirror` 代替左侧编辑区域，用 `react-remark` 生成的 React 组件替换右边的 iframe，以解决 iframe 整体刷新造成的闪屏问题
   - 第三天：增加了左右分栏，探索导出 pdf 的方案（window.print，jsPdf.html，canvas2Html + jsPdf.addImage）
