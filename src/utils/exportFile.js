@@ -1,6 +1,5 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import "@/assets/font/shsc-normal.js";
 
 export function exportPdfFromCanvas(selector, filename) {
   const ele = document.querySelector(selector);
