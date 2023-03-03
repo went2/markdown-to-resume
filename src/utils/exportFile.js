@@ -2,32 +2,45 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "@/assets/font/shsc-normal.js";
 
-const options = {
-  scale: 4,
-  dpi: 300,
-  backgroundColor: "#FFF",
-};
 export function exportPdfFromCanvas(selector, filename) {
   const ele = document.querySelector(selector);
   if (!ele) return;
 
-  splitPage(ele);
-  return;
+  const options = {
+    scale: 3,
+    dpi: 300,
+    backgroundColor: "#FFF",
+    onclone(clonedDocument) {
+      let target = clonedDocument.querySelector(selector);
+      target.style.transform = "scale(1)";
+      splitPage(target);
+    },
+  };
+
   html2canvas(ele, options).then((canvas) => {
     const pdf = new jsPDF("p", "mm", "a4");
     const ctx = canvas.getContext("2d"),
-      a4w = 210,
-      a4h = 297, // A4 210mm x 297mm，四边可保留10mm的边距，显示区域190x277，这里不保留
+      a4w = 200,
+      a4h = 287, // A4 210mm x 297mm，四边可保留边距如5mm，显示区域200x287，这里不保留
       //按A4显示比例换算一页图像的像素高度
       imgHeight = Math.floor((a4h * canvas.width) / a4w);
     let renderedHeight = 0;
 
-    console.log("canvas width", canvas.width);
+    console.log(
+      "canvasH",
+      canvas.height,
+      "canvasW",
+      canvas.width,
+      "imgHeight",
+      imgHeight
+    );
 
     while (renderedHeight < canvas.height) {
       let page = document.createElement("canvas");
       page.width = canvas.width;
       page.height = Math.min(imgHeight, canvas.height - renderedHeight); //内容可能不足一页
+      console.log("pageHeight", page.height);
+
       // getImageData裁剪一页区域，画到创建的canvas对象中
       page
         .getContext("2d")
@@ -45,8 +58,8 @@ export function exportPdfFromCanvas(selector, filename) {
       pdf.addImage(
         page.toDataURL("image/jpeg", 1.0),
         "JPEG",
-        10,
-        10,
+        5,
+        5,
         a4w,
         Math.min(a4h, (a4w * page.height) / page.width)
       );
@@ -100,17 +113,33 @@ export function exportPdfFromHtml(selector, filename) {
 }
 
 function splitPage(ele) {
-  // 元素的宽高统一采用 offsetWidth 与 offsetHeight，不用 getBoundingClientRect 的数值
-  // 后者受元素缩放的影响，不固定
+  // 元素的宽高统一采用 offsetWidth 与 offsetHeight
+  // 不用 getBoundingClientRect 的数值，因为它受元素缩放的影响，不固定
   const pageHeight = ele.offsetWidth * (297 / 210); // 按照 A4 比例的 1 页的像素
 
-  let totalPage = Math.ceil(ele.offsetHeight / pageHeight);
-
   // 找出哪个元素跨页的算法：找出当前页的第一个跨页父元素中最深层级的子元素
+  let totalPage = Math.ceil(ele.offsetHeight / pageHeight);
   let eleCrossed = findFirstCrossedChild(ele, pageHeight, totalPage);
 
-  // 处理跨页元素，在它的前面插入一个有高度的空白 div，将它挤到下一页
-  console.log(eleCrossed);
+  insertBlackBeforeEles(eleCrossed, pageHeight);
+}
+
+/**
+ * 处理跨页元素(们)，在它的前面插入一个有高度的空白 div，将它挤到下一页
+ * @param {HTMLElement[]} eleArr
+ */
+function insertBlackBeforeEles(eleArr, pageHeight) {
+  eleArr.forEach((ele, i) => {
+    let newNode = document.createElement("div");
+    newNode.className = "blank-placeholder";
+    newNode.style.background = "white";
+    newNode.style.width = "100%";
+    newNode.style.height =
+      ele.offsetTop + ele.offsetHeight - pageHeight * (i + 1) + "px";
+
+    let parent = ele.parentNode;
+    parent.insertBefore(newNode, ele);
+  });
 }
 
 /**
@@ -170,6 +199,7 @@ function findFirstCrossedChild(root, pageHeight, totalPage) {
  * @param {number} currentPage 元素所在当前页数，从1开始
  */
 function isCrossPage(el, pageHeight, currentPage) {
+  // 本项目中元素的 offsetTop 为它的上外边框到容器内边框的距离
   const top = el.offsetTop,
     height = el.offsetHeight,
     totalPH = pageHeight * currentPage;
