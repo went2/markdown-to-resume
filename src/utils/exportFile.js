@@ -100,29 +100,65 @@ export function exportPdfFromHtml(selector, filename) {
 }
 
 function splitPage(ele) {
-  // 因为存在缩放，宽高统一采用 boundingClienRect 的数值，不和 offsetHeight 混用
-  // boundingClienRect 不准确，还是应该采用 offsetHeight
-  const eleBounding = ele.getBoundingClientRect();
-  const eTop = eleBounding.top; // 容器元素距顶高度，用做基准，第一页的开始
+  // 元素的宽高统一采用 offsetWidth 与 offsetHeight，不用 getBoundingClientRect 的数值
+  // 后者受元素缩放的影响，不固定
   const pageHeight = ele.offsetWidth * (297 / 210); // 按照 A4 比例的 1 页的像素
-
-  const eleList = ele.children;
-  const nodesNum = eleList.length;
 
   let totalPage = Math.ceil(ele.offsetHeight / pageHeight);
 
-  // 找出当前页第一个跨页且最深层级的子元素
-  // 跨页的外层元素中有若干（嵌套的）子元素，有的跨页，有的不夸页，从中找到第一个跨页的子元素
-  // 依次类推，直到没有子元素
+  // 找出哪个元素跨页的算法：找出当前页的第一个跨页父元素中最深层级的子元素
+  let eleCrossed = findFirstCrossedChild(ele, pageHeight, totalPage);
 
-  // 2页，需找 1 个跨页的最外层的元素即可
-  let pageNum = 1; // 从第1页开始
-  console.log("pageHeight", pageHeight);
-  for (let i = 0; i < nodesNum; i++) {
-    let node = eleList[i];
-    if (isCrossPage(node, pageHeight, pageNum)) {
-      console.log("找到跨页元素", node);
-      break;
+  // 处理跨页元素，在它的前面插入一个有高度的空白 div，将它挤到下一页
+  console.log(eleCrossed);
+}
+
+/**
+ * 深度搜索，找到跨页的叶子元素。返回数组，第1个元素表示它跨了第1-2页，第2个元素表示它跨了第2-3页
+ * @param {HTMLElement} root 根元素
+ * @param {number} pageHeight 页高
+ * @param {number} totalPage 总页数
+ */
+function findFirstCrossedChild(root, pageHeight, totalPage) {
+  // 名称说明, root: 整个页面的容器，parent: root 下的子元素，child: parent 下嵌套的子元素
+  const maxCrossedEles = totalPage - 1; // 2 页要找 1 个跨页元素
+  if (maxCrossedEles <= 0) return;
+  let crossedChildrenNodes = [];
+
+  let currentPage = 1; // 当前正在处理页的页码，从1开始
+
+  let parentList = root.children;
+  let parentLen = parentList.length;
+  if (!parentLen) return;
+
+  // 控制 parentList 的搜索
+  for (let i = 0; i < parentLen; i++) {
+    let parentNode = parentList[i];
+
+    if (isCrossPage(parentNode, pageHeight, currentPage)) {
+      // console.log("找到跨页父元素", parentNode);
+
+      let crossedChild = findDeepCrossedChild(parentNode);
+      crossedChildrenNodes.push(crossedChild);
+
+      currentPage++;
+    }
+  }
+  return crossedChildrenNodes;
+
+  function findDeepCrossedChild(node) {
+    let childList = node.children;
+    let len = childList.length;
+    if (len) {
+      for (let i = 0; i < len; i++) {
+        let childNode = childList[i];
+        if (isCrossPage(childNode, pageHeight, currentPage)) {
+          return findDeepCrossedChild(childNode);
+        }
+      }
+    } else {
+      // 无子元素，当前元素即层级最深的跨页元素
+      return node;
     }
   }
 }
@@ -131,7 +167,7 @@ function splitPage(ele) {
  * 判断某个元素是否跨页
  * @param {HTMLElement} el 元素
  * @param {number} pageHeight 页高
- * @param {number} currentPage 元素所在当前页数
+ * @param {number} currentPage 元素所在当前页数，从1开始
  */
 function isCrossPage(el, pageHeight, currentPage) {
   const top = el.offsetTop,
