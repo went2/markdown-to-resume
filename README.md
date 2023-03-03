@@ -27,6 +27,6 @@
 ![first-day-work](https://user-images.githubusercontent.com/20923112/222759116-b3f1bc9c-7535-40c4-b042-f9ceef74e852.gif)
   
   - 第二天：用 `CodeMirror` 代替左侧编辑区域，用 `react-markdown` 生成的 React 组件替换右边的 iframe，以解决 iframe 整体刷新造成的闪屏问题
-  - 第三天：增加了左右分栏，探索导出 pdf 的方案（window.print，jsPdf.html，canvas2Html + jsPdf.addImage）
-  - 第四天：优化导出 pdf 的分页问题。用 canvas2Html + jsPdf.addImage 的方式导出 pdf 会面临三个坑：1）导出的图片模糊；2）提升图片的清晰度后，文件大小明显上升；3）文件分页后，有的内容会被截断；分页这个坑，目前采用遍历节点树，在跨页的子节点上方插入空白节点，将之挤到下一页的方式暂时解决。
+  - 第三天：增加了左右分栏，探索导出 pdf 的方案（window.print，jsPdf.html，html2Canvas + jsPdf.addImage）
+  - 第四天：优化导出 pdf 的分页问题。用 html2Canvas + jsPdf.addImage 的方式导出 pdf 会面临三个坑：1）导出的图片模糊；2）提升图片的清晰度后，文件大小明显上升；3）文件分页后，有的内容会被截断；分页这个坑，目前采用遍历节点树，在跨页的子节点上方插入空白节点，将之挤到下一页的方式暂时解决。
     
