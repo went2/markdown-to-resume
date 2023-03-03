@@ -1,6 +1,6 @@
 # Markdown-to-Resume
 
-[m2r](m2r.netlify.app): convert your markdown file to nicely formatted resume. 
+[m2r](m2r.netlify.app): convert your markdown file to pdf which runs locally.
 
 ## Usage
 
