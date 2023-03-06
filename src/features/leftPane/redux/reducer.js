@@ -9,6 +9,8 @@ import rehypeStringify from "rehype-stringify";
 const initialState = {
   doc: "", // markdown string
   filename: "",
+  css: ".rs-view-page { h1 { color: red; } }", // css string
+  isMdEditing: true,
 };
 
 export const md2Html = createAsyncThunk("editor/md2html", (content) => {
@@ -50,6 +52,13 @@ const editorSlice = createSlice({
     updateDoc(state, action) {
       state.doc = action.payload;
     },
+    changeMdEditing(state) {
+      state.isMdEditing = !state.isMdEditing;
+    },
+    updateCss(state, action) {
+      state.css = action.payload;
+      console.log("updateCss", state.css);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,6 +72,6 @@ const editorSlice = createSlice({
   },
 });
 
-export const { updateDoc } = editorSlice.actions;
+export const { updateDoc, changeMdEditing, updateCss } = editorSlice.actions;
 export { editorSlice };
 export default editorSlice.reducer;

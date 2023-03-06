@@ -2,13 +2,17 @@ import React, { useCallback } from "react";
 import "./HeaderRight.less";
 import { connect } from "react-redux";
 
-import { exportPdfFromCanvas, exportMd } from "@/utils/exportFile";
+import {
+  exportPdfFromCanvas,
+  exportMd,
+  exportPdfFromWindow,
+} from "@/utils/exportFile";
 
 const HeaderRight = (props) => {
   const { filename, doc } = props;
   const exportPdfHandler = useCallback(() => {
     // 获取预览内容的节点
-    exportPdfFromCanvas(".rs-view-page", filename);
+    exportPdfFromWindow(".rs-view__inner", filename);
   }, [filename]);
 
   const exportMdhandler = useCallback(() => {

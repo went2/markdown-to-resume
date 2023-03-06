@@ -61,6 +61,23 @@ export function exportPdfFromCanvas(selector, filename) {
   });
 }
 
+export function exportPdfFromWindow(selector, filename) {
+  const ele = document.querySelector(selector);
+  if (!ele) return;
+  var eleContents = ele.innerHTML;
+  console.log(eleContents);
+  var printWindow = window.open("", "", "height=1000,width=1000");
+  printWindow.document.write("<html><head><title>Printed Contents</title>");
+  printWindow.document.write("</head><body >");
+  printWindow.document.write(eleContents);
+  printWindow.document.write("</body></html>");
+  printWindow.document.close();
+  printWindow.onafterprint = () => {
+    printWindow.close();
+  };
+  printWindow.print();
+}
+
 export function exportMd(stringData, filename) {
   const blob = new Blob([stringData], {
     type: "text/markdown",

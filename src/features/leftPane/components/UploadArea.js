@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { Upload } from "antd";
-import { readFile } from "@/features/editor/redux/reducer.js";
+import { readFile } from "../redux/reducer.js";
 import { connect } from "react-redux";
 
 const { Dragger } = Upload;

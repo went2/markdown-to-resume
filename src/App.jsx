@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import Header from "./features/header/Header.js";
-import Editor from "./features/editor/Editor.js";
 import Preview from "./features/preview/Preview.js";
 
 import SplitPane from "react-split-pane";
-import UploadArea from "./features/editor/UploadArea.js";
+import UploadArea from "./features/leftPane/components/UploadArea.js";
+import LeftPane from "./features/leftPane";
 
 import "./App.less";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ const App = memo(({ filename }) => {
       <Header></Header>
       <main>
         <SplitPane split="vertical">
-          {filename ? <Editor /> : <UploadArea />}
+          {filename ? <LeftPane /> : <UploadArea />}
           {filename ? (
             <Preview />
           ) : (

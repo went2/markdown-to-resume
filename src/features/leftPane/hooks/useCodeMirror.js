@@ -7,17 +7,28 @@ import {
   keymap,
 } from "@codemirror/view";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
+import { css } from "@codemirror/lang-css";
 import { defaultKeymap, history } from "@codemirror/commands";
 import { languages } from "@codemirror/language-data";
+import { minimalSetup } from "codemirror";
 
-const extensions = [
+const commonExtensions = [
   highlightSpecialChars(),
   history(),
   drawSelection(),
   keymap.of(defaultKeymap),
 ];
 
-const useCodeMirror = ({ onChange, initialDoc }) => {
+const langExtensionMap = {
+  markdown: markdown({
+    base: markdownLanguage,
+    codeLanguages: languages,
+    addKeymap: true,
+  }),
+  css: css(),
+};
+
+const useCodeMirror = ({ onChange, initialDoc, lang = "markdown" }) => {
   const refContainer = useRef(null);
   const [editorView, setEditorView] = useState();
 
@@ -27,12 +38,10 @@ const useCodeMirror = ({ onChange, initialDoc }) => {
     const startState = EditorState.create({
       doc: initialDoc,
       extensions: [
-        ...extensions,
-        markdown({
-          base: markdownLanguage,
-          codeLanguages: languages,
-          addKeymap: true,
-        }),
+        ...commonExtensions,
+
+        langExtensionMap[lang],
+        minimalSetup,
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
           if (update.changes) {
