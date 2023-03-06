@@ -5,11 +5,12 @@ import remarkRehype from "remark-rehype";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import initCss from "./initialCssState";
 
 const initialState = {
   doc: "", // markdown string
   filename: "",
-  css: ".rs-view-page { h1 { color: red; } }", // css string
+  css: initCss, // css string
   isMdEditing: true,
 };
 
@@ -57,7 +58,6 @@ const editorSlice = createSlice({
     },
     updateCss(state, action) {
       state.css = action.payload;
-      console.log("updateCss", state.css);
     },
   },
   extraReducers: (builder) => {
