@@ -61,19 +61,28 @@ export function exportPdfFromCanvas(selector, filename) {
   });
 }
 
-// 打开窗口并打印比 jsPdf 效果更好，honor with this stackoverflow answer
-// https://stackoverflow.com/questions/524696/how-to-create-a-style-tag-with-javascript
+// 打开窗口并打印比 jsPdf 效果更好
+// https://stackoverflow.com/questions/18191893/generate-pdf-from-html-in-div-using-javascript
 export function exportPdfFromWindow(selector, filename, cssText) {
   const ele = document.querySelector(selector);
   if (!ele) return;
   var eleContents = ele.innerHTML;
   var printWindow = window.open("", "", "height=1000,width=1000");
-  printWindow.document.write(
-    `<html><head><style>${cssText}</style><title>${filename}</title>`
-  );
-  printWindow.document.write("</head><body >");
+  printWindow.document.write(`<html><head><title>${filename}</title>`);
+  printWindow.document.write("</head><body>");
   printWindow.document.write(eleContents);
   printWindow.document.write("</body></html>");
+  // add style
+  const head = printWindow.document.head;
+  const style = document.createElement("style");
+  head.appendChild(style);
+  if (style.styleSheet) {
+    style.styleSheet.cssText = cssText;
+  } else {
+    style.appendChild(document.createTextNode(cssText));
+  }
+  console.log(head, printWindow.document.body);
+
   printWindow.document.close();
   printWindow.onafterprint = () => {
     printWindow.close();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import "./Preview.less";
@@ -7,15 +7,20 @@ import ReactMarkdown from "react-markdown";
 
 const Preview = (props) => {
   const { doc, css } = props;
+  const styleEle = useRef(null);
 
   useEffect(() => {
-    const head = document.head || document.getElementsByTagName("head");
-    const style = document.createElement("style");
-    head.appendChild(style);
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
+    if (!styleEle.current) {
+      const head = document.head || document.getElementsByTagName("head");
+      const style = document.createElement("style");
+      head.appendChild(style);
+      styleEle.current = style;
+    }
+
+    if (styleEle.current.styleSheet) {
+      styleEle.current.styleSheet.cssText = css;
     } else {
-      style.appendChild(document.createTextNode(css));
+      styleEle.current.appendChild(document.createTextNode(css));
     }
   }, [css]);
 

@@ -8,7 +8,7 @@ const HeaderRight = (props) => {
   const { filename, doc, css } = props;
   const exportPdfHandler = useCallback(() => {
     exportPdfFromWindow(".rs-view__inner", filename, css);
-  }, [filename]);
+  }, [filename, css]);
 
   const exportMdhandler = useCallback(() => {
     exportMd(doc, filename);
