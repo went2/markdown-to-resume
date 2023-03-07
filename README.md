@@ -1,14 +1,14 @@
 # Markdown-to-Resume
 
-[m2r](m2r.netlify.app)，一个简易的简历页生成器。
+[m2r](m2r.netlify.app)，从 markdown 文件生成简历格式的示例。
 
-## 使用应用
+## 使用
 
 1. 导入 markdown 格式的简历文件；
 2. 在线编辑简历内容及 css 并实时预览效果；
 3. 导出编辑后的 pdf 及 md 文件
 
-## 在本地运行应用
+## 运行开发项目
 
 1. 将本项目克隆到本地，进入项目根目录，安装依赖 `npm install`
 2. 运行项目：`npm start`

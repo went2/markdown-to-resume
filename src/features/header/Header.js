@@ -13,7 +13,7 @@ function Header() {
         <div className="title-text">
           <span>M</span>arkdown to <span>R</span>esume
         </div>
-        <div className="desc">完全运行在本地的 markdown 转 pdf 工具</div>
+        <div className="desc">运行在本地的 markdown 转 pdf 工具</div>
       </h1>
       <HeaderRight />
     </div>
