@@ -5,5 +5,5 @@
 ## Usage
 
 1. Import the resume file in markdown format.
-2. Edit resume content online and preview the effect in real time.
+2. Edit resume content and css online and preview the effect in real time.
 3. Export edited pdf and md files.
