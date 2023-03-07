@@ -81,11 +81,11 @@ export function exportPdfFromWindow(selector, filename, cssText) {
   } else {
     style.appendChild(document.createTextNode(cssText));
   }
-  console.log(head, printWindow.document.body);
-
   printWindow.document.close();
+
   printWindow.onafterprint = () => {
     printWindow.close();
+    printWindow.onafterprint = null;
   };
   printWindow.print();
 }
@@ -106,28 +106,6 @@ export function exportMd(stringData, filename) {
 
   // 释放当前的 URL 对象
   URL.revokeObjectURL(objURL);
-}
-
-export function exportPdfFromHtml(selector, filename) {
-  const ele = document.querySelector(selector);
-  if (!ele) return;
-
-  const pdf = new jsPDF();
-
-  pdf.setFont("shsc", "normal");
-  // set css fontFamily to make custom font work with .html()
-  // https://github.com/parallax/jsPDF/issues/2465
-  ele.style.fontFamily = "shsc";
-
-  pdf.html(ele, {
-    callback: function (doc) {
-      doc.setFont("shsc", "normal");
-      doc.save(filename);
-    },
-    margin: [10, 10, 10, 10],
-    width: 190,
-    windowWidth: 675,
-  });
 }
 
 function splitPage(ele) {
