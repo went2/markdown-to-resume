@@ -1,6 +1,6 @@
 # Markdown-to-Resume
 
-[m2r](m2r.netlify.app)，从 markdown 文件生成简历格式的示例。
+[m2r](https://m2r.netlify.app)，从 markdown 文件生成简历格式的示例。
 
 ## 使用
 
