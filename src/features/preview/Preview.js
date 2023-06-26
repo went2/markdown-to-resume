@@ -17,11 +17,8 @@ const Preview = (props) => {
       styleEle.current = style;
     }
 
-    if (styleEle.current.styleSheet) {
-      styleEle.current.styleSheet.cssText = css;
-    } else {
-      styleEle.current.appendChild(document.createTextNode(css));
-    }
+    styleEle.current.innerHTML = "";
+    styleEle.current.appendChild(document.createTextNode(css));
   }, [css]);
 
   return (

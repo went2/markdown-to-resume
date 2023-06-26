@@ -58,7 +58,6 @@ const editorSlice = createSlice({
     },
     updateCss(state, action) {
       state.css = action.payload;
-      console.log("updateCss", state.css);
     },
   },
   extraReducers: (builder) => {
