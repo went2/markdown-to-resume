@@ -1,6 +1,6 @@
 # Markdown-to-Resume
 
-[m2r](https://m2r.netlify.app): convert your markdown file to pdf which runs locally.
+[m2r](https://m2r.netlify.app): convert your markdown file to pdf locally.
 
 ## Usage
 
