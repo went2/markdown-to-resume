@@ -1,5 +1,10 @@
 const cssText = `
-/* 右边样式的 css 设置如下 */
+/* 修改 css 预览效果 */
+.rs-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+}
 .rs-page {
   padding: 1rem;
 }
@@ -42,11 +47,6 @@ const cssText = `
   line-height: 1.57;
   color: #333;
   font-size: 13px;
-}
-.rs-page {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
 }
 `;
 

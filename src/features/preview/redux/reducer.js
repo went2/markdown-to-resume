@@ -7,6 +7,4 @@ const previewSlice = createSlice({
   reducers: {},
 });
 
-// export const {  } = previewSlice.actions;
-
 export default previewSlice.reducer;
