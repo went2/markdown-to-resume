@@ -1,5 +1,5 @@
 .rs-view__wrapper {
-  padding: 2rem 0px;
+  padding: 1rem 0px;
   background-color: var(--preview-background-color);
   word-wrap: break-word;
   width: 100%;
@@ -22,33 +22,18 @@
 }
 
 .rs-view__inner {
-  width: 666px;
+  width: 21cm;
+  min-height: 29.7cm;
   transform-origin: left top;
-  margin: 20px auto;
-  margin-left: 65px;
-
+  transform: scale(0.78);
+  margin-top: 10px;
+  margin-left: 30px;
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  background-color: #fff;
   .rs-page {
-    padding: 2rem 3rem;
-    width: 100%;
-    background-color: #fff;
-    transform: scale(0.78);
-    top: 0;
-    z-index: 10;
-    transform-origin: left top;
-
-    h2,
-    h3 {
-      font-weight: 600;
-    }
-
-    p > code {
-      border-radius: 4px;
-      background-color: rgba(25, 30, 35, 0.05);
-      word-break: break-all;
-    }
-
-    ul {
-      font-size: 14px;
-    }
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
+    padding: 1cm 1cm 0.5cm 1cm;
   }
 }

@@ -1,36 +1,39 @@
 const cssText = `
 /* 修改 css 预览效果 */
 .rs-page {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
+  font-size: 12pt;
+  line-height: 1.25;
 }
-.rs-page {
-  padding: 1rem;
-}
+
 .rs-page h1 {
-  padding: 10px 0;
-  line-height: 1.6;
-  font-size: 30px;
+  line-height: 1.4;
+  font-size: 24pt;
   color: #000;
 }
-.rs-page h2 {
-  margin: 12px 0;
-  padding: 5px 0;
-  font-size: 20px;
 
+.rs-page h2 {
+  margin: 4pt 0;
+  font-size: 16pt;
+  font-weight: 600;
+  line-height: 1.25;
+  padding-bottom: 2pt;
+  border-bottom: 2px solid rgb(44, 49, 73);
 }
+
 .rs-page h3 {
-  margin: 8px 0;
-  font-size: 15px;
-  padding: 2.5px 0;
+  margin: 4pt 0;
+  font-size: 14pt;
 }
 .rs-page p {
-  margin: 0 20px;
-  line-height: 1.65;
+  text-align: justify;
 }
 .rs-page ul {
-  padding-left: 20px;
+  margin: 4pt 0;
+  padding-left: 12pt;
+}
+
+.rs-page ul li {
+  margin: 2pt;
 }
 .rs-page a {
   text-decoration: none;
@@ -38,9 +41,10 @@ const cssText = `
   border-bottom: 1px solid #333;
 }
 .rs-page p > code {
+  border-radius: 4px;
+  background-color: rgba(25, 30, 35, 0.05);
+  word-break: break-all;
   display: inline-block;
-  position: relative;
-  left: -20px;
   margin-bottom: 4px;
   margin-left: 4px;
   padding: 1px 6px;
